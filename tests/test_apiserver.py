@@ -1,6 +1,7 @@
 # tests/test_apiserver.py
 #encoding:utf-8
 from tests.base import ApiServerUnittest
+import unittest
 '''
 继承ApiServerUnittest，使用Mock Server服务。
 '''
@@ -61,7 +62,6 @@ class TestApiServer(ApiServerUnittest):
         }
         return self.api_client.post(url, json = data)
         
-    @unittest.SkipTest
     def test_index(self):
         '''
         测试进入首页
@@ -71,7 +71,6 @@ class TestApiServer(ApiServerUnittest):
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.text,'Hello World!')
         
-    @unittest.SkipTest
     def test_create_user_ok(self):
         '''
         测试成功创建用户
@@ -86,7 +85,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertTrue(resp_json.get('success'))
         self.assertEqual(resp_json.get('msg'), "user created successfully.")
         
-    @unittest.SkipTest
+    
     def test_create_user_fail(self):
         '''
         测试重复创建用户
@@ -102,7 +101,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertFalse(resp_json.get('success'))
         self.assertEqual(resp_json.get('msg'), "user already existed.")
         
-    @unittest.SkipTest        
+            
     def test_update_user_fail(self):
         '''
         测试更新用户信息失败
@@ -117,7 +116,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertFalse(resp_json.get('success'))
         self.assertEqual(resp_json.get('data'), {})
     
-    @unittest.SkipTest
+    
     def test_update_user_ok(self):
         '''
         测试更新用户信息成功
@@ -135,7 +134,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertTrue(resp_json.get('success'))
         self.assertEqual(resp_json.get('data'), {"name" : name, "password" : new_pwd})
     
-    @unittest.SkipTest
+    
     def test_get_user(self):
         '''
         测试获取用户失败
@@ -148,7 +147,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertFalse(resp_json.get('success'))
         self.assertEqual(resp_json.get('data'), {})
     
-    @unittest.SkipTest
+    
     def test_get_user(self):
         '''
         测试获取用户失败
@@ -163,8 +162,8 @@ class TestApiServer(ApiServerUnittest):
         resp_json = resp.json()
         self.assertTrue(resp_json.get('success'))
         self.assertEqual(resp_json.get('data'), {"name" : name, "password" : pwd})
-        
-    @unittest.SkipTest
+
+    
     def test_get_all_user_zero(self):
         '''
         测试获取所有用户，当没有用户时
@@ -176,9 +175,8 @@ class TestApiServer(ApiServerUnittest):
         self.assertTrue(resp_json.get('success'))
         self.assertEqual(resp_json.get('count'), 0)
         self.assertEqual(resp_json.get('items'), [])
+
     
-    
-    @unittest.SkipTest
     def test_get_all_user_one(self):
         '''
         测试获取所有用户，当有一个用户时
@@ -196,7 +194,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertEqual(resp_json.get('count'), 1)
         self.assertEqual(resp_json.get('items'), [{'name': name, 'password': pwd}])
 
-    @unittest.SkipTest
+    
     def test_delete_user_fail(self):
         '''
         测试删除用户失败
@@ -209,7 +207,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertFalse(resp_json.get('success'))
         self.assertEqual(resp_json.get('data'), {})
     
-    @unittest.SkipTest 
+     
     def test_delete_user_ok(self):
         '''
         测试删除用户成功
@@ -225,7 +223,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertTrue(resp_json.get('success'))
         self.assertEqual(resp_json.get('data'), {"name" : name, "password" : pwd})
         
-    @unittest.SkipTest
+    
     def test_rest_all(self):
         '''
         测试清空所有用户
@@ -236,7 +234,7 @@ class TestApiServer(ApiServerUnittest):
         resp_json = resp.json()
         self.assertTrue(resp_json.get('success', True))
     
-    @unittest.SkipTest
+    
     def test_get_customized_response(self):
         status_code = 200
         headers = {
@@ -251,7 +249,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertEqual(resp.status_code, status_code)
         self.assertEqual(resp.json(), body)
         
-    @unittest.SkipTest  
+      
     def test_get_customized_response(self):
         status_code = 500
         headers = {
