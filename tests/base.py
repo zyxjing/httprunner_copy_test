@@ -5,7 +5,7 @@ from multiprocessing import Process
 import time
 
 import requests
-from api_server import app as flask_app
+from tests.api_server import app as flask_app
 from httpbin import app as httpbin_app
 from httprunner import utils
 
