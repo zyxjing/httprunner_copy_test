@@ -1,6 +1,6 @@
 # tests/test_apiserver.py
 #encoding:utf-8
-from base import ApiServerUnittest
+from tests.base import ApiServerUnittest
 '''
 继承ApiServerUnittest，使用Mock Server服务。
 '''
