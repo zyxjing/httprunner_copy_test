@@ -71,6 +71,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(resp.text,'Hello World!')
         
+
     def test_create_user_ok(self):
         '''
         测试成功创建用户
@@ -93,7 +94,7 @@ class TestApiServer(ApiServerUnittest):
         uid = 1001
         name = 'user_1001',
         pwd = 'pwd_1001'
-        create_user(uid, name, pwd) # 先创建一个用户
+        self.create_user(uid, name, pwd) # 先创建一个用户
         resp = self.create_user(uid, name, pwd) # 再用相同的参数创建一个用户
     
         self.assertEqual(resp.status_code, 500)
@@ -135,7 +136,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertEqual(resp_json.get('data'), {"name" : name, "password" : new_pwd})
     
     
-    def test_get_user(self):
+    def test_get_user_fail(self):
         '''
         测试获取用户失败
         '''
@@ -148,7 +149,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertEqual(resp_json.get('data'), {})
     
     
-    def test_get_user(self):
+    def test_get_user_ok(self):
         '''
         测试获取用户失败
         '''
@@ -235,7 +236,7 @@ class TestApiServer(ApiServerUnittest):
         self.assertTrue(resp_json.get('success', True))
     
     
-    def test_get_customized_response(self):
+    def test_get_customized_response_ok(self):
         status_code = 200
         headers = {
             "Content-Type" : "application/json"
@@ -249,8 +250,8 @@ class TestApiServer(ApiServerUnittest):
         self.assertEqual(resp.status_code, status_code)
         self.assertEqual(resp.json(), body)
         
-      
-    def test_get_customized_response(self):
+    @unittest.SkipTest
+    def test_get_customized_response_fail(self):
         status_code = 500
         headers = {
             "Content-Type" : "application/json"
@@ -263,3 +264,7 @@ class TestApiServer(ApiServerUnittest):
         
         self.assertEqual(resp.status_code, status_code)
         self.assertEqual(resp.json(), body)
+
+if __name__ == '__main__':
+    unittest.main()
+    print('stoped')
