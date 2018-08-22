@@ -6,7 +6,6 @@ import time
 import requests
 from httpbin import app as httpbin_app
 from httprunner import utils
-from httprunner.thread_util import create_thread, stop_thread
 from tests.api_server import app as flask_app
 
 import threading
@@ -56,13 +55,13 @@ class ApiServerUnittest(unittest.TestCase):
         '''
         
         # 方法二：采用多线程的模式（后续：1）所有的测试运行完后，直接杀死子进程；2）将子线程设置未守护线程，主线程执行完毕后，守护线程会一起退出。）
-        cls.flask_thread = create_thread(thread_target = run_flask, thread_name = 'flask_thread')
+        cls.flask_thread = threading.Thread(target = run_flask, name = 'flask_thread')
         cls.flask_thread.setDaemon(True)
         cls.flask_thread.start()
         #cls.flask_thread.join() # 不能等待子线程执行完毕，因为子线程运行不会执行完毕
         '''
         #httpbin服务不用启动
-        cls.httpbin_thread = create_thread(thread_target = run_httpbin, thread_name = 'httpbin_thread')
+        cls.httpbin_thread = threading.Thread(thread_target = run_httpbin, thread_name = 'httpbin_thread')
         cls.httpbin_thread.start()
         '''
         
@@ -75,15 +74,15 @@ class ApiServerUnittest(unittest.TestCase):
         # 定义全局请求的session（子类自动继承此属性，可用同一个api_client发送请求）
         cls.api_client = requests.Session()
     
-    @classmethod
-    def tearDownClass(cls):
-        '''
-        @summary:停止Flask API接口服务进程。
-        '''
-        #stop_thread(cls.flask_thread) # 强制结束一个子线程，会抛出SystemExit异常
-        #stop_thread(cls.httpbin_thread) # 强制结束一个子线程，会抛出SystemExit异常
-        print('当前活动的线程的个数：', threading.activeCount())
-        print('当前所有活动线程的列表：', threading.enumerate())
+    #@classmethod
+    #def tearDownClass(cls):
+        #'''
+        #@summary:停止Flask API接口服务进程。
+        #'''
+        ##stop_thread(cls.flask_thread) # 强制结束一个子线程，会抛出SystemExit异常
+        ##stop_thread(cls.httpbin_thread) # 强制结束一个子线程，会抛出SystemExit异常
+        #print('当前活动的线程的个数：', threading.activeCount())
+        #print('当前所有活动线程的列表：', threading.enumerate())
         
         
     def get_token(self, user_agent, device_sn, os_platform, app_version):

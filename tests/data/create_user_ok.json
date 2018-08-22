@@ -1,0 +1,24 @@
+{
+    "name" : "create user which does not exist",
+    "request" : {
+        "url" : "http://127.0.0.1:5000/api/users/1001",
+        "method" : "POST",
+        "headers" : {
+            "Content-Type" : "application/json"
+        },
+        "json" : {
+            "name" : "user_1001",
+            "password" : "pwd_1001"
+        }
+    },
+    "response" : {
+        "headers" : {
+            "Content-Type" : "application/json"
+        },
+        "body" : {
+            "success" : true,
+            "msg" : "user created successfully."
+        },
+        "status_code" : 201
+    }
+}
